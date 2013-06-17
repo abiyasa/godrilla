@@ -1,0 +1,3 @@
+[submodule "lib/robotlegs2-starling-viewmap"]
+	path = lib/robotlegs2-starling-viewmap
+	url = git://github.com/jamieowen/robotlegs2-starling-viewmap.git
