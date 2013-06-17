@@ -4,8 +4,14 @@ package godrilla
     import flash.display.StageAlign;
     import flash.display.StageScaleMode;
 
+    import robotlegs.bender.extensions.contextView.ContextView;
+    import robotlegs.bender.bundles.mvcs.MVCSBundle;
+    import robotlegs.bender.framework.api.IContext;
+    import robotlegs.bender.framework.impl.Context;
+    import robotlegs.extensions.starlingViewMap.StarlingViewMapExtension;
+
     import starling.core.Starling;
-    import godrilla.views.ContextView;
+    import godrilla.views.MainView;
 
     /**
      * The main application file
@@ -14,6 +20,8 @@ package godrilla
      */
     public class MainApp extends Sprite
     {
+        private var _context:IContext;
+
         public function MainApp()
         {
             stage.align = StageAlign.TOP_LEFT;
@@ -24,9 +32,15 @@ package godrilla
 
         private function init():void
         {
-            const starling:Starling = new Starling(ContextView, stage);
+            // init starling
+            const starling:Starling = new Starling(MainView, stage);
             //starling.showStats = true;
             starling.start();
+
+            // init aplication context
+            _context = new Context()
+                .install(MVCSBundle, StarlingViewMapExtension)
+                .configure(MainConfig, new ContextView(this), starling);
         }
     }
 }
