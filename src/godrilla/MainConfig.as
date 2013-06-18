@@ -1,13 +1,17 @@
 package godrilla
 {
     import org.swiftsuspenders.Injector;
-
     import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
     import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;
     import robotlegs.bender.framework.api.IConfig;
     import robotlegs.bender.framework.api.IContext;
     import robotlegs.bender.framework.api.IInjector;
-
+    import godrilla.events.ChangeScreenEvent;
+    import godrilla.commands.ChangeScreenCommand;
+    import godrilla.views.MainView;
+    import godrilla.views.MainScreenView;
+    import godrilla.mediators.MainViewMediator;
+    import godrilla.mediators.MainScreenViewMediator;
 
     /**
      * The configuration for the app
@@ -29,9 +33,12 @@ package godrilla
 
         public function configure() : void
         {
-            // TODO map view
+            // map views
+            this.mediatorMap.map(MainView).toMediator(MainViewMediator);
+            this.mediatorMap.map(MainScreenView).toMediator(MainScreenViewMediator);
 
-            // TODO map commands
+            // map commands
+            commandMap.map(ChangeScreenEvent.CHANGE).toCommand(ChangeScreenCommand);
         }
     }
 }
