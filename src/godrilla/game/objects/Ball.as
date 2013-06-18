@@ -1,5 +1,6 @@
 package godrilla.game.objects
 {
+    import flash.geom.Rectangle;
     /**
      * A simple bouncing ball
      * @author abiyasa
@@ -21,10 +22,16 @@ package godrilla.game.objects
         /**
          * Resets ball into starting position
          */
-        public function reset():void
+        override public function reset(arenaWidth:int, arenaHeight:int):void
         {
-            speedX = 10;
-            speedY = 10;
+            speedX = -10;
+            speedY = -10;
+            posX = arenaWidth / 2;
+            posY = arenaHeight * 0.7;
+
+            boundRect = new Rectangle(posX, posY, _width, _height);
+
+            updateDisplayObject();
         }
 
         override public function update(elapsedTime:Number):void
@@ -32,8 +39,10 @@ package godrilla.game.objects
             posX += speedX;
             posY += speedY;
 
-            _displayObject.x = posX;
-            _displayObject.y = posY;
+            boundRect.x = posX;
+            boundRect.y = posY;
+
+            updateDisplayObject();
         }
 
     }

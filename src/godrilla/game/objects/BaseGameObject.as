@@ -1,5 +1,7 @@
 package godrilla.game.objects
 {
+    import flash.geom.Rectangle;
+    import starling.display.DisplayObjectContainer;
     import starling.display.Quad;
     import starling.display.Sprite;
 
@@ -36,6 +38,9 @@ package godrilla.game.objects
         public var speedX:int;
         public var speedY:int;
 
+        // boundary rectangle for collision detection
+        public var boundRect:Rectangle;
+
         public function BaseGameObject()
         {
             super();
@@ -63,9 +68,35 @@ package godrilla.game.objects
             return box;
         }
 
+        public function reset(arenaWidth:int, arenaHeight:int):void
+        {
+            // nothing to do, extend plz
+        }
+
         public function update(elapsedTime:Number):void
         {
             // nothing to do, extend plz
+        }
+
+        /**
+         * Adds the display object into the screen container
+         * @param screenContainer
+         */
+        public function addToStage(screenContainer:DisplayObjectContainer):void
+        {
+            if (_displayObject != null)
+            {
+                screenContainer.addChild(_displayObject);
+            }
+        }
+
+        /**
+         * Update the display object position based on object posX & posY
+         */
+        protected function updateDisplayObject():void
+        {
+            _displayObject.x = posX;
+            _displayObject.y = posY;
         }
 
     }
