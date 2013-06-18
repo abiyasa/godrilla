@@ -1,5 +1,6 @@
 package godrilla.commands
 {
+    import godrilla.views.GameScreenView;
     import robotlegs.bender.bundles.mvcs.Command;
     import starling.core.Starling;
     import starling.display.Stage;
@@ -37,7 +38,8 @@ package godrilla.commands
                 break;
 
             case 'play':
-                // TODO init the play screen
+                // init the play screen
+                newScreen = new GameScreenView();
                 break;
             }
 

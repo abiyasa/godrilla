@@ -10,8 +10,10 @@ package godrilla
     import godrilla.commands.ChangeScreenCommand;
     import godrilla.views.MainView;
     import godrilla.views.MainScreenView;
+    import godrilla.views.GameScreenView;
     import godrilla.mediators.MainViewMediator;
     import godrilla.mediators.MainScreenViewMediator;
+    import godrilla.mediators.GameScreenViewMediator;
 
     /**
      * The configuration for the app
@@ -36,6 +38,7 @@ package godrilla
             // map views
             this.mediatorMap.map(MainView).toMediator(MainViewMediator);
             this.mediatorMap.map(MainScreenView).toMediator(MainScreenViewMediator);
+            this.mediatorMap.map(GameScreenView).toMediator(GameScreenViewMediator);
 
             // map commands
             commandMap.map(ChangeScreenEvent.CHANGE).toCommand(ChangeScreenCommand);
