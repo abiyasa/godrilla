@@ -84,11 +84,18 @@ package godrilla.views
             // TODO calculate elapsed time
             var elapsedTime:Number = 0;
 
-            // update game
-            _gameEngine.update(elapsedTime);
+            // update game UI and check game status
+            if (_gameEngine.status == Engine.STATUS_WIN)
+            {
+                _score.text = "You WIN!! Have a coffee break";
+            }
+            else
+            {
+                // update game
+                _gameEngine.update(elapsedTime);
 
-            // TODO update game UI and check game status
-            _score.text = _gameEngine.score.toString();
+                _score.text = _gameEngine.score.toString();
+            }
         }
 
         /**

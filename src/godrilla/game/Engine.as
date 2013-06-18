@@ -23,6 +23,7 @@ package godrilla.game
         public static const STATUS_PLAY:int = 10;
         public static const STATUS_PAUSED:int = 20;
         public static const STATUS_STOP:int = 30;
+        public static const STATUS_WIN:int = 40;
 
         private var _status:int;
 
@@ -255,7 +256,12 @@ package godrilla.game
                     _bricks.splice(idx, 1);
                 }
 
-                // TODO check the remaining bricks
+                // check the remaining bricks
+                if (_bricks.length == 0)
+                {
+                    // you are a winner
+                    _status = STATUS_WIN;
+                }
 
                 ball.update(elapsedTime);
             }
