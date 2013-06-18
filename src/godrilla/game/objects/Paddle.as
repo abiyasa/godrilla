@@ -41,6 +41,19 @@ package godrilla.game.objects
 
             updateDisplayObject();
         }
+
+        /**
+         * Moves the paddle to a specific position
+         *
+         * @param posX
+         * @param posY
+         */
+        public function moveTo(posX:int, posY:int):void
+        {
+            this.posX = posX;
+
+            // TODO update speed, not position for better FX
+        }
     }
 
 }

@@ -4,6 +4,8 @@ package godrilla.game
     import godrilla.game.objects.Ball;
     import godrilla.game.objects.Paddle;
     import starling.display.DisplayObjectContainer;
+    import starling.events.Touch;
+    import starling.events.TouchEvent;
 
     /**
      * Main game engine
@@ -28,6 +30,15 @@ package godrilla.game
 
         // player's paddle
         private var _paddle:Paddle;
+
+        // last touch/mouse position
+        private var _touchX:Number;
+
+        // last touch/mouse position
+        private var _touchY:Number;
+
+        // for more Touch interaction
+        private var _touch:Touch;
 
         /**
          * The game status
@@ -70,8 +81,12 @@ package godrilla.game
         {
             _score = 0;
             _status = STATUS_PLAY;
+            _touchX = _areaWidth / 2;
+            _touchY = _areaHeight * 0.7;
 
             resetObjects();
+
+            _stage.stage.addEventListener(TouchEvent.TOUCH, onTouch);
         }
 
         /**
@@ -95,6 +110,8 @@ package godrilla.game
         public function stop():void
         {
             _status = STATUS_STOP;
+
+            _stage.stage.removeEventListener(TouchEvent.TOUCH, onTouch);
         }
 
         /**
@@ -103,7 +120,8 @@ package godrilla.game
          */
         public function update(elapsedTime:Number):void
         {
-            // TODO update paddle
+            // update paddle
+            _paddle.moveTo(_touchX, _touchY);
             _paddle.update(elapsedTime);
             var paddleBoundRect:Rectangle = _paddle.boundRect;
 
@@ -114,12 +132,14 @@ package godrilla.game
                 ballBoundRect = ball.boundRect;
 
                 // check collision between ball & paddle
-                if (paddleBoundRect.intersects(ballBoundRect))
+                if (paddleBoundRect.intersects(ballBoundRect) && (ball.speedY > 0))
                 {
                     // TODO advanced calculation to define bounce angle
 
                     // bounce
                     ball.speedY *= -1;
+
+                    // TODO update ball posY to prevent 'merging' between ball & the paddle
 
                     _score += 200;
                 }
@@ -155,6 +175,19 @@ package godrilla.game
             }
         }
 
+        /**
+         * Handles touch or mouse move event
+         * @param event
+         */
+        private function onTouch(event:TouchEvent):void
+        {
+            _touch = event.getTouch(_stage.stage);
+            if (_touch != null)
+            {
+                _touchX = _touch.globalX;
+                _touchY = _touch.globalY;
+            }
+        }
     }
 
 }
