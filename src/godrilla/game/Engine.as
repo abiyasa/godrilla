@@ -136,12 +136,34 @@ package godrilla.game
                 // check collision between ball & paddle
                 if (paddleBoundRect.intersects(ballBoundRect) && (ball.speedY > 0))
                 {
-                    // TODO advanced calculation to define bounce angle
+                    // advanced calculation to define bounce angle
+                    var ballMidX:int = ballBoundRect.left + (ballBoundRect.width / 2);
+                    var paddleMidX:int = paddleBoundRect.left + (paddleBoundRect.width / 2);
+                    var distance:Number = (ballMidX - paddleMidX) / (paddleBoundRect.width / 2);
+                    var bounceX:Number;
+                    var bounceY:Number;
+                    if ((distance < -0.7) || (distance > 0.7))
+                    {
+                        bounceX = -1;
+                        bounceY = -1;
+                    }
+                    else if (((distance > -0.7) && (distance < -0.5)) ||
+                        ((distance > 0.5) && (distance < 0.7)))
+                    {
+                        bounceX = -0.5;
+                        bounceY = -1.5;
+                    }
+                    else
+                    {
+                        bounceX = 1.0;
+                        bounceY = -1.0;
+                    }
 
                     // bounce
-                    ball.speedY *= -1;
+                    ball.speedX *= bounceX;
+                    ball.speedY *= bounceY;
 
-                    // TODO update ball posY to prevent 'merging' between ball & the paddle
+                    // TODO update ball posY to prevent ball sticking on the paddle
 
                     _score += 200;
                 }

@@ -7,6 +7,7 @@ package godrilla.game.objects
      */
     public class Ball extends BaseGameObject
     {
+        public static const VELOCITY:int = 15;
 
         public function Ball()
         {
@@ -24,8 +25,9 @@ package godrilla.game.objects
          */
         override public function reset(gameArena:Rectangle):void
         {
-            speedX = -10;
-            speedY = -10;
+            var radian:Number = Math.PI / 4;
+            speedX = -VELOCITY * Math.sin(radian);
+            speedY = -VELOCITY * Math.cos(radian);
             posX = gameArena.left + (gameArena.width / 2);
             posY = gameArena.top + (gameArena.height * 0.7);
 
