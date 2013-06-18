@@ -105,13 +105,24 @@ package godrilla.game
         {
             // TODO update paddle
             _paddle.update(elapsedTime);
+            var paddleBoundRect:Rectangle = _paddle.boundRect;
 
-            // TODO update ball
+            // update balls
             var ballBoundRect:Rectangle;
             for each (var ball:Ball in _balls)
             {
-                // TODO check collision between ball & paddle
                 ballBoundRect = ball.boundRect;
+
+                // check collision between ball & paddle
+                if (paddleBoundRect.intersects(ballBoundRect))
+                {
+                    // TODO advanced calculation to define bounce angle
+
+                    // bounce
+                    ball.speedY *= -1;
+
+                    _score += 200;
+                }
 
                 // check collision between ball & wall
                 if ((ballBoundRect.left < 0) || ((ballBoundRect.right) > _areaWidth))
