@@ -3,6 +3,7 @@ package godrilla.views
     import starling.display.Button;
     import starling.display.Sprite;
     import starling.events.Event;
+    import starling.text.TextField;
     import godrilla.views.Utils;
 
     /**
@@ -12,6 +13,7 @@ package godrilla.views
     public class MainScreenView extends Sprite
     {
         private var _startButton:Button;
+        private var _title:TextField;
 
         public function MainScreenView()
         {
@@ -25,12 +27,16 @@ package godrilla.views
             removeEventListener(Event.ADDED_TO_STAGE, init);
 
             // show title and add buttons
+            _title = Utils.createSimpleLabel("Godrilla Arkanoid", 0x009eef, 200, 200, 32);
+            this.addChild(_title);
             _startButton = Utils.createDummyButton("Play", 0x009eef, 128, 64);
             this.addChild(_startButton);
 
             // layout
-            _startButton.x = 100;
-            _startButton.y = 100;
+            _title.x = (this.stage.stageWidth - _title.width) / 2;
+            _title.y = 50;
+            _startButton.x = (this.stage.stageWidth - _startButton.width) / 2;
+            _startButton.y = 300;
             _startButton.name = "play";
             _startButton.addEventListener(Event.TRIGGERED, onButtonTriggered);
         }
