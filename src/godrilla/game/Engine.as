@@ -2,6 +2,7 @@ package godrilla.game
 {
     import flash.geom.Rectangle;
     import godrilla.game.objects.Ball;
+    import godrilla.game.objects.Brick;
     import godrilla.game.objects.Paddle;
     import starling.display.DisplayObjectContainer;
     import starling.events.Touch;
@@ -27,6 +28,9 @@ package godrilla.game
 
         // List of balls
         private var _balls:Vector.<Ball>;
+
+        // List of bricks
+        private var _bricks:Vector.<Brick>;
 
         // player's paddle
         private var _paddle:Paddle;
@@ -60,6 +64,7 @@ package godrilla.game
 
             _status = STATUS_INIT;
             _balls = new Vector.<Ball>();
+            _bricks = new Vector.<Brick>();
         }
 
         public function init():void
@@ -87,6 +92,7 @@ package godrilla.game
             _touchY = _gameArea.top + (_gameArea.height * 0.7);
 
             resetObjects();
+            resetBricks();
 
             _stage.stage.addEventListener(TouchEvent.TOUCH, onTouch);
         }
@@ -104,6 +110,31 @@ package godrilla.game
 
             // reset paddle
             _paddle.reset(_gameArea);
+        }
+
+        /**
+         * init & reset bricks
+         */
+        protected function resetBricks():void
+        {
+            var posX:int;
+            var posY:int = 100;
+            for (var i:int = 0; i < 5; i++)
+            {
+                posX = 20;
+                for (var j:int = 0; j < 7; j++)
+                {
+                    var brick:Brick = new Brick();
+                    _bricks.push(brick);
+                    brick.posX = posX;
+                    brick.posY = posY;
+                    brick.addToStage(_stage);
+                    brick.reset(_gameArea);
+
+                    posX += 62;
+                }
+                posY += 42;
+            }
         }
 
         /**
@@ -129,6 +160,7 @@ package godrilla.game
 
             // update balls
             var ballBoundRect:Rectangle;
+            var brickBoundRect:Rectangle;
             for each (var ball:Ball in _balls)
             {
                 ballBoundRect = ball.boundRect;
@@ -158,6 +190,8 @@ package godrilla.game
                         bounceX = 1.0;
                         bounceY = -1.0;
                     }
+                    // TODO for more precise radian bounce calculation, please
+                    // see http://www.cs.princeton.edu/~cdecoro/RealTimeGraphics/hw3writeup/RTG_HW3.htm
 
                     // bounce
                     ball.speedX *= bounceX;
@@ -193,7 +227,35 @@ package godrilla.game
                     return;
                 }
 
-                // TODO check collision between ball & bricks
+                // check collision between ball & bricks
+                var brick:Brick;
+                var bricksToRemove:Vector.<Brick> = new Vector.<Brick>();
+                for each (brick in _bricks)
+                {
+                    brickBoundRect = brick.boundRect;
+                    if (brickBoundRect.intersects(ballBoundRect))
+                    {
+                        // note this brick to be removed later
+                        bricksToRemove.push(brick);
+
+                        _score += 400;
+
+                        // TODO advanced bounce based on where the ball hits
+
+                        // bounce ball
+                        ball.speedY *= -1;
+                    }
+                }
+
+                // remove unactive bricks
+                for each (brick in bricksToRemove)
+                {
+                    brick.removeFromStage(_stage);
+                    var idx:int = _bricks.indexOf(brick);
+                    _bricks.splice(idx, 1);
+                }
+
+                // TODO check the remaining bricks
 
                 ball.update(elapsedTime);
             }

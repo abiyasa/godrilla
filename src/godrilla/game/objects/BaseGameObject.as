@@ -14,6 +14,7 @@ package godrilla.game.objects
         public static const TYPE_GENERIC:int = 0;
         public static const TYPE_BALL:int = 10;
         public static const TYPE_PADDLE:int = 20;
+        public static const TYPE_BRICK:int = 30;
 
         protected var _type:int;
 
@@ -93,6 +94,18 @@ package godrilla.game.objects
             if (_displayObject != null)
             {
                 screenContainer.addChild(_displayObject);
+            }
+        }
+
+        /**
+         * Removes the display object into the screen container
+         * @param screenContainer
+         */
+        public function removeFromStage(screenContainer:DisplayObjectContainer):void
+        {
+            if (_displayObject != null)
+            {
+                screenContainer.removeChild(_displayObject);
             }
         }
 
