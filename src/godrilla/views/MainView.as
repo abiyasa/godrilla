@@ -8,7 +8,7 @@ package godrilla.views
     import godrilla.views.Utils;
 
     /**
-     * The main view
+     * The main view for the main application/context
      * @author abiyasa
      */
     public class MainView extends Sprite

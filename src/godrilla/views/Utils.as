@@ -7,7 +7,7 @@ package godrilla.views
 
     /**
      * Utility class for views
-     * @author Abiyasa
+     * @author abiyasa
      */
     public class Utils
     {
