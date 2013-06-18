@@ -34,7 +34,7 @@ package godrilla
         {
             // init starling
             const starling:Starling = new Starling(MainView, stage);
-            //starling.showStats = true;
+            starling.showStats = true;
             starling.start();
 
             // init aplication context
