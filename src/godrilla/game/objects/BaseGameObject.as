@@ -68,7 +68,13 @@ package godrilla.game.objects
             return box;
         }
 
-        public function reset(arenaWidth:int, arenaHeight:int):void
+        /**
+         * Resets the game object.
+         * Init position, speed, and other properties
+         *
+         * @param gameArena The valid game arena
+         */
+        public function reset(gameArena:Rectangle):void
         {
             // nothing to do, extend plz
         }

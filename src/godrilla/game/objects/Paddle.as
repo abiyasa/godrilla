@@ -19,12 +19,12 @@ package godrilla.game.objects
             _displayObject = BaseGameObject.generateDummySprite(_width, _height, 0x008080FF);
         }
 
-        override public function reset(arenaWidth:int, arenaHeight:int):void
+        override public function reset(gameArena:Rectangle):void
         {
             speedX = 0;
             speedY = 0;
-            posX = (arenaWidth / 2) - (_width / 2);
-            posY = arenaHeight * 0.9;
+            posX = gameArena.left + (gameArena.width / 2) - (_width / 2);
+            posY = gameArena.top + (gameArena.height * 0.9);
 
             boundRect = new Rectangle(posX, posY, _width, _height);
 

@@ -22,12 +22,12 @@ package godrilla.game.objects
         /**
          * Resets ball into starting position
          */
-        override public function reset(arenaWidth:int, arenaHeight:int):void
+        override public function reset(gameArena:Rectangle):void
         {
             speedX = -10;
             speedY = -10;
-            posX = arenaWidth / 2;
-            posY = arenaHeight * 0.7;
+            posX = gameArena.left + (gameArena.width / 2);
+            posY = gameArena.top + (gameArena.height * 0.7);
 
             boundRect = new Rectangle(posX, posY, _width, _height);
 

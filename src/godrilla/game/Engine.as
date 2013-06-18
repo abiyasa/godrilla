@@ -46,15 +46,14 @@ package godrilla.game
          */
         public function get status():int { return _status; }
 
-        private var _areaWidth:int;
-        private var _areaHeight:int;
+        // game arena
+        private var _gameArea:Rectangle;
 
         public function Engine(stage:DisplayObjectContainer, width:int, height:int)
         {
             super();
             _stage = stage;
-            _areaWidth = width;
-            _areaHeight = height;
+            _gameArea = new Rectangle(0, 0, width, height);
 
             _status = STATUS_INIT;
             _balls = new Vector.<Ball>();
@@ -81,8 +80,8 @@ package godrilla.game
         {
             _score = 0;
             _status = STATUS_PLAY;
-            _touchX = _areaWidth / 2;
-            _touchY = _areaHeight * 0.7;
+            _touchX = _gameArea.left + (_gameArea.width / 2);
+            _touchY = _gameArea.top + (_gameArea.height * 0.7);
 
             resetObjects();
 
@@ -97,11 +96,11 @@ package godrilla.game
             // reset ball
             for each (var ball:Ball in _balls)
             {
-                ball.reset(_areaWidth, _areaHeight);
+                ball.reset(_gameArea);
             }
 
             // reset paddle
-            _paddle.reset(_areaWidth, _areaHeight);
+            _paddle.reset(_gameArea);
         }
 
         /**
@@ -145,21 +144,21 @@ package godrilla.game
                 }
 
                 // check collision between ball & wall
-                if ((ballBoundRect.left < 0) || ((ballBoundRect.right) > _areaWidth))
+                if ((ballBoundRect.left < _gameArea.left) || ((ballBoundRect.right) > _gameArea.right))
                 {
                     // bounce
                     ball.speedX *= -1;
 
                     _score += 100;
                 }
-                if (ballBoundRect.top < 0)
+                if (ballBoundRect.top < _gameArea.top)
                 {
                     // bounce
                     ball.speedY *= -1;
 
                     _score += 100;
                 }
-                else if (ballBoundRect.top > _areaHeight)
+                else if (ballBoundRect.top > _gameArea.bottom)
                 {
                     // lost a ball
                     _score -= 100;
