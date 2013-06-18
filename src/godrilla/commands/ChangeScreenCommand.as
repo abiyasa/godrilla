@@ -46,8 +46,14 @@ package godrilla.commands
             // change screen
             if (newScreen != null)
             {
-                starling.stage.removeChildren();
-                starling.stage.addChild(newScreen);
+                var theStage:Stage = starling.stage;
+                var numOfChildren:int = theStage.numChildren;
+                if (numOfChildren > 0)
+                {
+                    theStage.removeChildAt(0);
+                }
+
+                theStage.addChildAt(newScreen, 0);
             }
         }
     }
