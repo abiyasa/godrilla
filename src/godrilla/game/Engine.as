@@ -1,6 +1,8 @@
 package godrilla.game
 {
+    import flash.geom.Rectangle;
     import godrilla.game.objects.Ball;
+    import godrilla.game.objects.Paddle;
     import starling.display.DisplayObjectContainer;
 
     /**
@@ -23,6 +25,9 @@ package godrilla.game
 
         // List of balls
         private var _balls:Vector.<Ball>;
+
+        // player's paddle
+        private var _paddle:Paddle;
 
         /**
          * The game status
@@ -51,7 +56,11 @@ package godrilla.game
             // init ball
             var ball:Ball = new Ball();
             _balls.push(ball);
-            _stage.addChild(ball.displayObject);
+            ball.addToStage(_stage);
+
+            // init paddle
+            _paddle = new Paddle();
+            _paddle.addToStage(_stage);
         }
 
         /**
@@ -62,10 +71,22 @@ package godrilla.game
             _score = 0;
             _status = STATUS_PLAY;
 
+            resetObjects();
+        }
+
+        /**
+         * Resets the game objects
+         */
+        protected function resetObjects():void
+        {
+            // reset ball
             for each (var ball:Ball in _balls)
             {
-                ball.reset();
+                ball.reset(_areaWidth, _areaHeight);
             }
+
+            // reset paddle
+            _paddle.reset(_areaWidth, _areaHeight);
         }
 
         /**
@@ -83,31 +104,44 @@ package godrilla.game
         public function update(elapsedTime:Number):void
         {
             // TODO update paddle
+            _paddle.update(elapsedTime);
 
             // TODO update ball
+            var ballBoundRect:Rectangle;
             for each (var ball:Ball in _balls)
             {
+                // TODO check collision between ball & paddle
+                ballBoundRect = ball.boundRect;
+
                 // check collision between ball & wall
-                if ((ball.posX < 0) || ((ball.posX + ball.width) > _areaWidth))
+                if ((ballBoundRect.left < 0) || ((ballBoundRect.right) > _areaWidth))
                 {
                     // bounce
                     ball.speedX *= -1;
 
                     _score += 100;
                 }
-                if ((ball.posY < 0) || ((ball.posY + ball.height)> _areaHeight))
+                if (ballBoundRect.top < 0)
                 {
                     // bounce
                     ball.speedY *= -1;
 
                     _score += 100;
                 }
+                else if (ballBoundRect.top > _areaHeight)
+                {
+                    // lost a ball
+                    _score -= 100;
+
+                    // TODO notify reset game
+                    resetObjects();
+                    return;
+                }
 
                 // TODO check collision between ball & bricks
 
                 ball.update(elapsedTime);
             }
-
         }
 
     }
