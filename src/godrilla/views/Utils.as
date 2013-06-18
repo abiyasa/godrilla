@@ -3,6 +3,8 @@ package godrilla.views
     import flash.display.BitmapData;
     import starling.display.Button;
     import starling.text.TextField;
+    import starling.utils.VAlign;
+    import starling.utils.HAlign;
     import starling.textures.Texture;
 
     /**
@@ -29,6 +31,22 @@ package godrilla.views
 
             return button;
         }
+
+        /**
+         * Creates a simple label/text
+         * @return
+         */
+        public static function createSimpleLabel(label:String, textColor:uint,
+            width:int, height:int, fontSize:int = 16):TextField
+        {
+            var text:TextField = new TextField(width, height, label,
+                "Verdana", fontSize, textColor);
+            text.vAlign = VAlign.TOP;
+            text.hAlign = HAlign.CENTER;
+
+            return text;
+        }
+
     }
 
 }
