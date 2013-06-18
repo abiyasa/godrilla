@@ -7,6 +7,9 @@ package godrilla.game.objects
      */
     public class Paddle extends BaseGameObject
     {
+        // movement limit
+        private var _minPosX:int;
+        private var _maxPosX:int;
 
         public function Paddle()
         {
@@ -25,6 +28,9 @@ package godrilla.game.objects
             speedY = 0;
             posX = gameArena.left + (gameArena.width / 2) - (_width / 2);
             posY = gameArena.top + (gameArena.height * 0.9);
+
+            _minPosX = gameArena.left;
+            _maxPosX = gameArena.left + gameArena.width - _width;
 
             boundRect = new Rectangle(posX, posY, _width, _height);
 
@@ -50,6 +56,15 @@ package godrilla.game.objects
          */
         public function moveTo(posX:int, posY:int):void
         {
+            // limit position
+            if (posX < _minPosX)
+            {
+                posX = _minPosX;
+            }
+            else if (posX > _maxPosX)
+            {
+                posX = _maxPosX;
+            }
             this.posX = posX;
 
             // TODO update speed, not position for better FX
