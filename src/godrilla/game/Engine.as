@@ -53,7 +53,10 @@ package godrilla.game
         {
             super();
             _stage = stage;
-            _gameArea = new Rectangle(0, 0, width, height);
+
+            // init game arena with padding
+            var padding:int = 0;
+            _gameArea = new Rectangle(padding, padding, width - (2 * padding), height - (2 * padding));
 
             _status = STATUS_INIT;
             _balls = new Vector.<Ball>();
