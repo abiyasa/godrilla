@@ -1,5 +1,6 @@
 package godrilla.views
 {
+    import godrilla.game.Engine;
     import starling.display.Button;
     import starling.display.Sprite;
     import starling.events.Event;
@@ -8,7 +9,7 @@ package godrilla.views
 
     /**
      * The main game screen.
-     * Also manage the game engine
+     * Also manage the game engine and the main game loop
      *
      * @author abiyasa
      */
@@ -16,6 +17,8 @@ package godrilla.views
     {
         private var _pauseButton:Button;
         private var _score:TextField;
+
+        private var _gameEngine:Engine;
 
         public function GameScreenView()
         {
@@ -33,7 +36,7 @@ package godrilla.views
             addEventListener(Event.REMOVED_FROM_STAGE, destroy);
 
             // show gui and buttons
-            _score = Utils.createSimpleLabel("score", 0x009eef, 200, 200, 16);
+            _score = Utils.createSimpleLabel("0", 0x009eef, 200, 200, 16);
             this.addChild(_score);
 
             // Note: no pause yet, just quitting the game
@@ -47,6 +50,8 @@ package godrilla.views
             _pauseButton.y = 10;
             _pauseButton.name = "pause";
             _pauseButton.addEventListener(Event.TRIGGERED, onButtonTriggered);
+
+            startGame();
         }
 
         private function destroy(event:Event = null):void
@@ -54,8 +59,47 @@ package godrilla.views
             trace(this + ', destroy()');
             removeEventListener(Event.REMOVED_FROM_STAGE, destroy);
 
-            // TODO stop timer and the game
+            stopGame();
+        }
 
+        /**
+         * Starts the game loop and game engine
+         */
+        private function startGame():void
+        {
+            _gameEngine = new Engine(this, this.stage.stageWidth, this.stage.stageHeight);
+            _gameEngine.init();
+            _gameEngine.start();
+
+            // start timer
+            this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+        }
+
+        /**
+         * Handle enter frame event
+         * @param event
+         */
+        private function onEnterFrame(event:Event):void
+        {
+            // TODO calculate elapsed time
+            var elapsedTime:Number = 0;
+
+            // update game
+            _gameEngine.update(elapsedTime);
+
+            // TODO update game UI and check game status
+            _score.text = _gameEngine.score.toString();
+        }
+
+        /**
+         * Stop the game loop and game engine
+         */
+        private function stopGame():void
+        {
+            // stop timer and the game
+            this.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+            _gameEngine.stop();
+            _gameEngine = null;
         }
 
         private function onButtonTriggered(event:Event):void
