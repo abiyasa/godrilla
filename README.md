@@ -16,3 +16,5 @@ A Simple arkanoid game using Starling and Robotlegs 2
 If you clone this project from a Git repo, please do `git submodule init` and `git submodule update` after cloning
 the project for the first time. This is for getting the Robotlegs Starling View Map extension from GitHub
 
+### Assets
+- Building texture: http://opengameart.org/node/8816 (modified)

@@ -72,6 +72,8 @@ package godrilla.game
         {
             _status = STATUS_INIT;
 
+            initBricks();
+
             // init ball
             var ball:Ball = new Ball();
             _balls.push(ball);
@@ -93,7 +95,6 @@ package godrilla.game
             _touchY = _gameArea.top + (_gameArea.height * 0.7);
 
             resetObjects();
-            resetBricks();
 
             _stage.stage.addEventListener(TouchEvent.TOUCH, onTouch);
         }
@@ -116,7 +117,7 @@ package godrilla.game
         /**
          * init & reset bricks
          */
-        protected function resetBricks():void
+        protected function initBricks():void
         {
             var posX:int;
             var posY:int = 100;
