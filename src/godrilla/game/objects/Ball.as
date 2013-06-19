@@ -1,6 +1,8 @@
 package godrilla.game.objects
 {
     import flash.geom.Rectangle;
+    import starling.display.Quad;
+    import starling.display.Sprite;
     /**
      * A simple bouncing ball
      * @author abiyasa
@@ -17,7 +19,22 @@ package godrilla.game.objects
             _type = TYPE_BALL;
             _width = 32;
             _height = 32;
-            _displayObject = BaseGameObject.generateDummySprite(_width, _height, 0x00FF8080);
+
+            initSprite();
+        }
+
+        private function initSprite():void
+        {
+            _displayObject = new Sprite();
+
+            // create simple box shape
+            var q:Quad = new Quad(_width, _height, 0x00FF8080);
+            _displayObject.addChild(q);
+
+            // fake shadow
+            var shadow:Quad = new Quad(_width, _height / 2, 0x00CCCCCC);
+            shadow.y = 50;
+            _displayObject.addChild(shadow);
         }
 
         /**
