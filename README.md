@@ -18,3 +18,4 @@ the project for the first time. This is for getting the Robotlegs Starling View 
 
 ### Assets
 - Building texture: http://opengameart.org/node/8816 (modified)
+- Godzilla textures: http://browse.deviantart.com/art/Godzilla-Dominations-II-260585747 (modified)

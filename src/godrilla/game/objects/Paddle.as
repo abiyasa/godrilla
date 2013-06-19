@@ -1,6 +1,9 @@
 package godrilla.game.objects
 {
     import flash.geom.Rectangle;
+    import starling.display.Image;
+    import starling.display.Sprite;
+    import starling.textures.Texture;
     /**
      * Player-controlled paddle
      * @author abiyasa
@@ -11,6 +14,11 @@ package godrilla.game.objects
         private var _minPosX:int;
         private var _maxPosX:int;
 
+        [Embed(source="../../../../assets/godrilla.png")]
+        public static const TEXTURE_GODRILLA:Class;
+
+        public static var mainTexture:Texture;
+
         public function Paddle()
         {
             super();
@@ -19,7 +27,28 @@ package godrilla.game.objects
             _type = TYPE_PADDLE;
             _width = 96;
             _height = 32;
-            _displayObject = BaseGameObject.generateDummySprite(_width, _height, 0x008080FF);
+
+            initSprite();
+        }
+
+        private function initSprite():void
+        {
+            // init textures
+            if (Paddle.mainTexture == null)
+            {
+                Paddle.mainTexture = Texture.fromBitmap(new TEXTURE_GODRILLA());
+            }
+
+            // create simple & random building shape
+            _displayObject = new Sprite();
+            var monster:Image = new Image(Paddle.mainTexture);
+
+            // adjust width & height
+            monster.width = _width;
+            monster.height = _width;
+            monster.y = -(_width - _height);
+
+            _displayObject.addChild(monster);
         }
 
         override public function reset(gameArena:Rectangle):void
