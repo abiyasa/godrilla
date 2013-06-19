@@ -14,6 +14,9 @@ package godrilla.game.objects
         private var _minPosX:int;
         private var _maxPosX:int;
 
+        // store half width, for optimization
+        private var _halfWidth:int;
+
         [Embed(source="../../../../assets/godrilla.png")]
         public static const TEXTURE_GODRILLA:Class;
 
@@ -27,6 +30,7 @@ package godrilla.game.objects
             _type = TYPE_PADDLE;
             _width = 96;
             _height = 32;
+            _halfWidth = _width / 2;
 
             initSprite();
         }
@@ -47,6 +51,7 @@ package godrilla.game.objects
             monster.width = _width;
             monster.height = _width;
             monster.y = -(_width - _height);
+            monster.x = -_halfWidth;
 
             _displayObject.addChild(monster);
         }
@@ -55,13 +60,13 @@ package godrilla.game.objects
         {
             speedX = 0;
             speedY = 0;
-            posX = gameArena.left + (gameArena.width / 2) - (_width / 2);
+            posX = gameArena.left + (gameArena.width / 2) - _halfWidth;
             posY = gameArena.top + (gameArena.height * 0.9);
 
-            _minPosX = gameArena.left;
-            _maxPosX = gameArena.left + gameArena.width - _width;
+            _minPosX = gameArena.left + _halfWidth;
+            _maxPosX = gameArena.left + gameArena.width - _halfWidth;
 
-            boundRect = new Rectangle(posX, posY, _width, _height);
+            boundRect = new Rectangle(posX - _halfWidth, posY, _width, _height);
 
             updateDisplayObject();
         }
@@ -71,7 +76,7 @@ package godrilla.game.objects
             posX += speedX;
             posY += speedY;
 
-            boundRect.x = posX;
+            boundRect.x = posX - _halfWidth;
             boundRect.y = posY;
 
             updateDisplayObject();
@@ -94,9 +99,23 @@ package godrilla.game.objects
             {
                 posX = _maxPosX;
             }
+            var originalPosX:int = this.posX;
             this.posX = posX;
 
-            // TODO update speed, not position for better FX
+            // update sprite DIRECTION
+            if (originalPosX < posX)
+            {
+                // facing right
+                _displayObject.scaleX = 1;
+            }
+            else if (originalPosX > posX)
+            {
+                // facing left
+                _displayObject.scaleX = -1;
+            }
+            // else if both positions are the same, don't change the scaleX for smoother transition
+
+            // TODO use speed instead of changing posX directly for better moving transition FX
         }
     }
 
