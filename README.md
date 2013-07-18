@@ -1,13 +1,13 @@
 # GODRILLA
-A Simple arkanoid game using Starling and Robotlegs 2
+An arkanoid game with a godzilla bouncing a (fire)ball destroying the city building. This is an experiment using Starling and the latest release of Robotlegs 2.0.
 
 ## Online Demo
-Checkout http://abiyasa.com/lab/starling/godrilla/
+http://abiyasa.com/lab/starling/godrilla/
 
 ## Libraries
 - Starling 1.3
 - Robotlegs 2.0.0
-- Robotlegs Starling View Map extension by Jamie Owen (https://github.com/jamieowen/robotlegs2-starling-viewmap)
+- [Robotlegs Starling View Map extension](https://github.com/jamieowen/robotlegs2-starling-viewmap) by Jamie Owen
 
 ## Compilation
 - Use Flash Develop
@@ -20,14 +20,23 @@ If you clone this project from a Git repo, please do `git submodule init` and `g
 the project for the first time. This is for getting the Robotlegs Starling View Map extension from GitHub
 
 ## Assets
-- Building texture: http://opengameart.org/node/8816 (modified)
-- Godzilla textures: http://browse.deviantart.com/art/Godzilla-Dominations-II-260585747 (modified)
+- Skycrapper textures by [hc](http://opengameart.org/node/8816) with some modifications
+- Godzilla textures by [~BLZofOZZ](http://browse.deviantart.com/art/Godzilla-Dominations-II-260585747) with some modifications
+
+# Implemented features
+- Use sprite for paddle and buildings
+- Buildings which will be destroyed and bounce back the ball
+- Simple start screen
+
+# What can be optimized
+- Use texture atlas for combining all sprites into 1 texture for less Starling drawing
+- Improve the ball bouncing on paddle, bounce different angle based on which part of the paddle the ball hits
 
 ## License
 Godrilla
 
-Author: I. Abiyasa Suhardi
-Copyright (c) I. Abiyasa Suhardi 2013
+Author: I. Abiyasa Suhardi (2013)
+
 http://www.abiyasa.com
 
 Licence Agreement (The MIT License)
