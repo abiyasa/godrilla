@@ -1,8 +1,10 @@
 # GODRILLA
 An arkanoid game with a godzilla bouncing a (fire)ball destroying the city building. This is an experiment using Starling and the latest release of Robotlegs 2.0.
 
+![Screen shots of Godrilla](http://abiyasa.com/lab/starling/godrilla/screen01.png "Screenshot")
+
 ## Online Demo
-http://abiyasa.com/lab/starling/godrilla/
+Play it at http://abiyasa.com/lab/starling/godrilla/
 
 ## Libraries
 - Starling 1.3
