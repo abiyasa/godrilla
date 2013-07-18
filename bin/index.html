@@ -18,7 +18,7 @@
             wmode: "direct" // can cause issues with FP settings & webcam
         };
         var attributes = {
-            id:"Godrilla"
+            id:"game-container"
         };
         swfobject.embedSWF(
             "godrilla.swf",
@@ -27,8 +27,9 @@
             flashvars, params, attributes);
     </script>
     <style>
-        html, body { height:100%; overflow:hidden; }
-        body { margin:0; }
+        html, body { height:100%; text-align: center; overflow:hidden; }
+        body { margin:10px; }
+        #game-container { margin: 0 auto; border: solid 1px #000; }
     </style>
 </head>
 <body>
